@@ -1,10 +1,10 @@
 digraph CADENA {
 	rankdir=LR
 	"" [shape=point]
-	Inicio [shape=circle]
-	CAD_Abierto [shape=circle]
+	CAD_Cerrado [label="CAD_Cerrado\nCADENA" shape=doublecircle]
 	CAD_Escape [shape=circle]
-	CAD_Cerrado [label="CAD_Cerrado\n[CADENA]" shape=doublecircle]
+	CAD_Abierto [shape=circle]
+	Inicio [shape=circle]
 	"" -> Inicio
 	Inicio -> CAD_Abierto [label=comilla_doble]
 	CAD_Abierto -> CAD_Abierto [label="todo menos barra_inv, comilla_doble, salto"]

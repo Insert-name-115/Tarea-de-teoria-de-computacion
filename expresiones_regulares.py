@@ -1,18 +1,7 @@
-# -------------------------------------------------------------------
-# PUNTO 2: Expresiones regulares
-# Comentarios:
-# - Una ER por token (sintaxis del módulo 're' de Python).
-# - Superposiciones:
-#   1) Máxima coincidencia: gana el lexema más largo
-#      (\== antes que \=, =.. antes que =, :- antes que :, _X antes que _).
-#   2) Prioridad: si empatan en largo, gana la ER que aparece primero.
-#      Por eso is y mod van antes que ATOMO ("is" -> OP_IS, "isa" -> ATOMO).
-# -------------------------------------------------------------------
-
 import re
+from especificacion_prolog import OPERADORES
 
-from punto1_especificacion import OPERADORES
-
+# El orden del diccionario es la prioridad: is y mod van antes que ATOMO
 EXPRESIONES = {
     "OP_IS": r"is",
     "OP_MOD": r"mod",

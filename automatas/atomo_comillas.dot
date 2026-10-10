@@ -1,10 +1,10 @@
 digraph ATOMO_COMILLAS {
 	rankdir=LR
 	"" [shape=point]
-	Inicio [shape=circle]
 	AC_Escape [shape=circle]
-	AC_Cerrado [label="AC_Cerrado\n[ATOMO_COMILLAS]" shape=doublecircle]
 	AC_Abierto [shape=circle]
+	AC_Cerrado [label="AC_Cerrado\nATOMO_COMILLAS" shape=doublecircle]
+	Inicio [shape=circle]
 	"" -> Inicio
 	Inicio -> AC_Abierto [label=comilla_simple]
 	AC_Abierto -> AC_Abierto [label="todo menos barra_inv, comilla_simple, salto"]
