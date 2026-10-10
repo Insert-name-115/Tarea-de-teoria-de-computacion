@@ -1,0 +1,10 @@
+digraph "ATOMO" {
+  rankdir=LR;
+  node [fontname="Helvetica"]; edge [fontname="Helvetica", fontsize=10];
+  inicio [shape=point, label=""];
+  q0 [shape=circle];
+  q1 [shape=doublecircle, label="q1\nATOMO"];
+  inicio -> q0;
+  q0 -> q1 [label="a-z"];
+  q1 -> q1 [label="a-z, A-Z, 0-9, _"];
+}

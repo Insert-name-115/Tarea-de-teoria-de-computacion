@@ -1,0 +1,18 @@
+digraph "COMENTARIO_BLOQUE" {
+  rankdir=LR;
+  node [fontname="Helvetica"]; edge [fontname="Helvetica", fontsize=10];
+  inicio [shape=point, label=""];
+  q0 [shape=circle];
+  q1 [shape=circle];
+  q2 [shape=circle];
+  q3 [shape=circle];
+  q4 [shape=doublecircle, label="q4\nCOMENTARIO_BLOQUE"];
+  inicio -> q0;
+  q0 -> q1 [label="/"];
+  q1 -> q2 [label="*"];
+  q2 -> q2 [label="todo excepto *"];
+  q2 -> q3 [label="*"];
+  q3 -> q3 [label="*"];
+  q3 -> q2 [label="todo excepto * /"];
+  q3 -> q4 [label="/"];
+}

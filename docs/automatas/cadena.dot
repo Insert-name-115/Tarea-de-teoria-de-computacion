@@ -1,0 +1,16 @@
+digraph "CADENA" {
+  rankdir=LR;
+  node [fontname="Helvetica"]; edge [fontname="Helvetica", fontsize=10];
+  inicio [shape=point, label=""];
+  q0 [shape=circle];
+  q1 [shape=circle];
+  q2 [shape=circle];
+  q3 [shape=doublecircle, label="q3\nCADENA"];
+  inicio -> q0;
+  q0 -> q1 [label="\""];
+  q1 -> q1 [label="todo excepto \\n \" \\"];
+  q1 -> q2 [label="\\"];
+  q2 -> q1 [label="\", ', \\, n, r, t"];
+  q1 -> q3 [label="\""];
+  q3 -> q1 [label="\""];
+}

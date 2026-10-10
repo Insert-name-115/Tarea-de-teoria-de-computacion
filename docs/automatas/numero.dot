@@ -1,0 +1,23 @@
+digraph "NUMERO" {
+  rankdir=LR;
+  node [fontname="Helvetica"]; edge [fontname="Helvetica", fontsize=10];
+  inicio [shape=point, label=""];
+  q0 [shape=circle];
+  q1 [shape=doublecircle, label="q1\nENTERO"];
+  q2 [shape=circle];
+  q3 [shape=doublecircle, label="q3\nREAL"];
+  q4 [shape=circle];
+  q5 [shape=circle];
+  q6 [shape=doublecircle, label="q6\nREAL"];
+  inicio -> q0;
+  q0 -> q1 [label="0-9"];
+  q1 -> q1 [label="0-9"];
+  q1 -> q2 [label="."];
+  q2 -> q3 [label="0-9"];
+  q3 -> q3 [label="0-9"];
+  q3 -> q4 [label="E, e"];
+  q4 -> q5 [label="+, -"];
+  q4 -> q6 [label="0-9"];
+  q5 -> q6 [label="0-9"];
+  q6 -> q6 [label="0-9"];
+}
