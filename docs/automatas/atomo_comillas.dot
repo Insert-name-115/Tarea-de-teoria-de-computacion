@@ -1,16 +1,15 @@
-digraph "ATOMO_COMILLAS" {
-  rankdir=LR;
-  node [fontname="Helvetica"]; edge [fontname="Helvetica", fontsize=10];
-  inicio [shape=point, label=""];
-  q0 [shape=circle];
-  q1 [shape=circle];
-  q2 [shape=circle];
-  q3 [shape=doublecircle, label="q3\nATOMO_COMILLAS"];
-  inicio -> q0;
-  q0 -> q1 [label="'"];
-  q1 -> q1 [label="todo excepto \\n ' \\"];
-  q1 -> q2 [label="\\"];
-  q2 -> q1 [label="\", ', \\, n, r, t"];
-  q1 -> q3 [label="'"];
-  q3 -> q1 [label="'"];
+digraph ATOMO_COMILLAS {
+	rankdir=LR
+	"" [shape=point]
+	AC_Abierto [label=AC_Abierto penwidth=1 shape=circle]
+	AC_Cerrado [label="AC_Cerrado\n[ATOMO_COMILLAS]" penwidth=1 shape=doublecircle]
+	AC_Escape [label=AC_Escape penwidth=1 shape=circle]
+	Inicio [label=Inicio penwidth=1 shape=circle]
+	"" -> Inicio
+	Inicio -> AC_Abierto [label=comilla_simple]
+	AC_Abierto -> AC_Abierto [label="todo menos barra_inv, comilla_simple, salto"]
+	AC_Abierto -> AC_Escape [label=barra_inv]
+	AC_Escape -> AC_Abierto [label="todo menos salto"]
+	AC_Abierto -> AC_Cerrado [label=comilla_simple]
+	AC_Cerrado -> AC_Abierto [label=comilla_simple]
 }

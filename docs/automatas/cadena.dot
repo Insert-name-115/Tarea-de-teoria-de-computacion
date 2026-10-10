@@ -1,16 +1,15 @@
-digraph "CADENA" {
-  rankdir=LR;
-  node [fontname="Helvetica"]; edge [fontname="Helvetica", fontsize=10];
-  inicio [shape=point, label=""];
-  q0 [shape=circle];
-  q1 [shape=circle];
-  q2 [shape=circle];
-  q3 [shape=doublecircle, label="q3\nCADENA"];
-  inicio -> q0;
-  q0 -> q1 [label="\""];
-  q1 -> q1 [label="todo excepto \\n \" \\"];
-  q1 -> q2 [label="\\"];
-  q2 -> q1 [label="\", ', \\, n, r, t"];
-  q1 -> q3 [label="\""];
-  q3 -> q1 [label="\""];
+digraph CADENA {
+	rankdir=LR
+	"" [shape=point]
+	CAD_Abierto [label=CAD_Abierto penwidth=1 shape=circle]
+	CAD_Cerrado [label="CAD_Cerrado\n[CADENA]" penwidth=1 shape=doublecircle]
+	CAD_Escape [label=CAD_Escape penwidth=1 shape=circle]
+	Inicio [label=Inicio penwidth=1 shape=circle]
+	"" -> Inicio
+	Inicio -> CAD_Abierto [label=comilla_doble]
+	CAD_Abierto -> CAD_Abierto [label="todo menos barra_inv, comilla_doble, salto"]
+	CAD_Abierto -> CAD_Escape [label=barra_inv]
+	CAD_Escape -> CAD_Abierto [label="todo menos salto"]
+	CAD_Abierto -> CAD_Cerrado [label=comilla_doble]
+	CAD_Cerrado -> CAD_Abierto [label=comilla_doble]
 }

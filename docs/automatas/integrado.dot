@@ -1,150 +1,126 @@
-digraph "INTEGRADO" {
-  rankdir=LR;
-  node [fontname="Helvetica"]; edge [fontname="Helvetica", fontsize=10];
-  inicio [shape=point, label=""];
-  q0 [shape=circle];
-  q1 [shape=doublecircle, label="q1\nESPACIO"];
-  q2 [shape=doublecircle, label="q2\nCORTE"];
-  q3 [shape=circle];
-  q4 [shape=doublecircle, label="q4\nCOMENTARIO_LINEA"];
-  q5 [shape=circle];
-  q6 [shape=doublecircle, label="q6\nPARENTESIS_IZQ"];
-  q7 [shape=doublecircle, label="q7\nPARENTESIS_DER"];
-  q8 [shape=doublecircle, label="q8\nOP_MULT"];
-  q9 [shape=doublecircle, label="q9\nOP_SUMA"];
-  q10 [shape=doublecircle, label="q10\nCOMA"];
-  q11 [shape=doublecircle, label="q11\nOP_RESTA"];
-  q12 [shape=doublecircle, label="q12\nPUNTO"];
-  q13 [shape=doublecircle, label="q13\nOP_DIV"];
-  q14 [shape=doublecircle, label="q14\nENTERO"];
-  q15 [shape=circle];
-  q16 [shape=doublecircle, label="q16\nPUNTO_Y_COMA"];
-  q17 [shape=doublecircle, label="q17\nOP_MENOR"];
-  q18 [shape=doublecircle, label="q18\nOP_UNIFICA"];
-  q19 [shape=doublecircle, label="q19\nOP_MAYOR"];
-  q20 [shape=circle];
-  q21 [shape=doublecircle, label="q21\nVARIABLE"];
-  q22 [shape=doublecircle, label="q22\nCORCHETE_IZQ"];
-  q23 [shape=circle];
-  q24 [shape=doublecircle, label="q24\nCORCHETE_DER"];
-  q25 [shape=doublecircle, label="q25\nVARIABLE_ANONIMA"];
-  q26 [shape=doublecircle, label="q26\nATOMO"];
-  q27 [shape=doublecircle, label="q27\nATOMO"];
-  q28 [shape=doublecircle, label="q28\nATOMO"];
-  q29 [shape=doublecircle, label="q29\nLLAVE_IZQ"];
-  q30 [shape=doublecircle, label="q30\nBARRA"];
-  q31 [shape=doublecircle, label="q31\nLLAVE_DER"];
-  q32 [shape=doublecircle, label="q32\nCADENA"];
-  q33 [shape=circle];
-  q34 [shape=doublecircle, label="q34\nATOMO_COMILLAS"];
-  q35 [shape=circle];
-  q36 [shape=doublecircle, label="q36\nOP_POTENCIA"];
-  q37 [shape=circle];
-  q38 [shape=circle];
-  q39 [shape=doublecircle, label="q39\nOP_DIV_ENTERA"];
-  q40 [shape=circle];
-  q41 [shape=doublecircle, label="q41\nOP_REGLA"];
-  q42 [shape=circle];
-  q43 [shape=doublecircle, label="q43\nOP_MENOR_IGUAL"];
-  q44 [shape=doublecircle, label="q44\nOP_IDENTICO"];
-  q45 [shape=doublecircle, label="q45\nOP_MAYOR_IGUAL"];
-  q46 [shape=doublecircle, label="q46\nOP_CONSULTA"];
-  q47 [shape=doublecircle, label="q47\nOP_NEGACION"];
-  q48 [shape=doublecircle, label="q48\nOP_NO_UNIFICA"];
-  q49 [shape=doublecircle, label="q49\nOP_IS"];
-  q50 [shape=doublecircle, label="q50\nATOMO"];
-  q51 [shape=doublecircle, label="q51\nOP_DCG"];
-  q52 [shape=circle];
-  q53 [shape=doublecircle, label="q53\nREAL"];
-  q54 [shape=doublecircle, label="q54\nOP_UNIV"];
-  q55 [shape=doublecircle, label="q55\nOP_NO_IDENTICO"];
-  q56 [shape=doublecircle, label="q56\nOP_MOD"];
-  q57 [shape=doublecircle, label="q57\nCOMENTARIO_BLOQUE"];
-  q58 [shape=circle];
-  q59 [shape=circle];
-  q60 [shape=doublecircle, label="q60\nREAL"];
-  inicio -> q0;
-  q0 -> q1 [label="\\t, \\n, \\r, ␣"];
-  q0 -> q2 [label="!"];
-  q0 -> q3 [label="\""];
-  q0 -> q4 [label="%"];
-  q0 -> q5 [label="'"];
-  q0 -> q6 [label="("];
-  q0 -> q7 [label=")"];
-  q0 -> q8 [label="*"];
-  q0 -> q9 [label="+"];
-  q0 -> q10 [label=","];
-  q0 -> q11 [label="-"];
-  q0 -> q12 [label="."];
-  q0 -> q13 [label="/"];
-  q0 -> q14 [label="0-9"];
-  q0 -> q15 [label=":"];
-  q0 -> q16 [label=";"];
-  q0 -> q17 [label="<"];
-  q0 -> q18 [label="="];
-  q0 -> q19 [label=">"];
-  q0 -> q20 [label="?"];
-  q0 -> q21 [label="A-Z"];
-  q0 -> q22 [label="["];
-  q0 -> q23 [label="\\"];
-  q0 -> q24 [label="]"];
-  q0 -> q25 [label="_"];
-  q0 -> q26 [label="a, b, c, d, e, f, g, h, j, k, l, n, o, p, q, r, s, t, u, v, w, x, y, z"];
-  q0 -> q27 [label="i"];
-  q0 -> q28 [label="m"];
-  q0 -> q29 [label="{"];
-  q0 -> q30 [label="|"];
-  q0 -> q31 [label="}"];
-  q1 -> q1 [label="\\t, \\n, \\r, ␣"];
-  q3 -> q3 [label="todo excepto \\n \" \\"];
-  q3 -> q32 [label="\""];
-  q3 -> q33 [label="\\"];
-  q4 -> q4 [label="todo excepto \\n"];
-  q5 -> q5 [label="todo excepto \\n ' \\"];
-  q5 -> q34 [label="'"];
-  q5 -> q35 [label="\\"];
-  q8 -> q36 [label="*"];
-  q11 -> q37 [label="-"];
-  q13 -> q38 [label="*"];
-  q13 -> q39 [label="/"];
-  q14 -> q40 [label="."];
-  q14 -> q14 [label="0-9"];
-  q15 -> q41 [label="-"];
-  q18 -> q42 [label="."];
-  q18 -> q43 [label="<"];
-  q18 -> q44 [label="="];
-  q19 -> q45 [label="="];
-  q20 -> q46 [label="-"];
-  q21 -> q21 [label="a-z, A-Z, 0-9, _"];
-  q23 -> q47 [label="+"];
-  q23 -> q48 [label="="];
-  q25 -> q21 [label="a-z, A-Z, 0-9, _"];
-  q26 -> q26 [label="a-z, A-Z, 0-9, _"];
-  q27 -> q26 [label="A-Z, 0-9, _, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, t, u, v, w, x, y, z"];
-  q27 -> q49 [label="s"];
-  q28 -> q26 [label="A-Z, 0-9, _, a, b, c, d, e, f, g, h, i, j, k, l, m, n, p, q, r, s, t, u, v, w, x, y, z"];
-  q28 -> q50 [label="o"];
-  q32 -> q3 [label="\""];
-  q33 -> q3 [label="\", ', \\, n, r, t"];
-  q34 -> q5 [label="'"];
-  q35 -> q5 [label="\", ', \\, n, r, t"];
-  q37 -> q51 [label=">"];
-  q38 -> q38 [label="todo excepto *"];
-  q38 -> q52 [label="*"];
-  q40 -> q53 [label="0-9"];
-  q42 -> q54 [label="."];
-  q48 -> q55 [label="="];
-  q49 -> q26 [label="a-z, A-Z, 0-9, _"];
-  q50 -> q26 [label="A-Z, 0-9, _, a, b, c, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z"];
-  q50 -> q56 [label="d"];
-  q52 -> q38 [label="todo excepto * /"];
-  q52 -> q52 [label="*"];
-  q52 -> q57 [label="/"];
-  q53 -> q53 [label="0-9"];
-  q53 -> q58 [label="E, e"];
-  q56 -> q26 [label="a-z, A-Z, 0-9, _"];
-  q58 -> q59 [label="+, -"];
-  q58 -> q60 [label="0-9"];
-  q59 -> q60 [label="0-9"];
-  q60 -> q60 [label="0-9"];
+digraph INTEGRADO {
+	rankdir=LR
+	"" [shape=point]
+	AC_Abierto [label=AC_Abierto penwidth=1 shape=circle]
+	AC_Cerrado [label="AC_Cerrado\n[ATOMO_COMILLAS]" penwidth=1 shape=doublecircle]
+	AC_Escape [label=AC_Escape penwidth=1 shape=circle]
+	Anonima [label="Anonima\n[VARIABLE_ANONIMA]" penwidth=1 shape=doublecircle]
+	Atomo [label="Atomo\n[ATOMO]" penwidth=1 shape=doublecircle]
+	BARRA [label=BARRA penwidth=1 shape=doublecircle]
+	BarraInv [label=BarraInv penwidth=1 shape=circle]
+	CAD_Abierto [label=CAD_Abierto penwidth=1 shape=circle]
+	CAD_Cerrado [label="CAD_Cerrado\n[CADENA]" penwidth=1 shape=doublecircle]
+	CAD_Escape [label=CAD_Escape penwidth=1 shape=circle]
+	CB_Asterisco [label=CB_Asterisco penwidth=1 shape=circle]
+	"CB_Barra/OP_DIV" [label="CB_Barra/OP_DIV\n[OP_DIV]" penwidth=1 shape=doublecircle]
+	CB_Cerrado [label="CB_Cerrado\n[COMENTARIO_BLOQUE]" penwidth=1 shape=doublecircle]
+	CB_Dentro [label=CB_Dentro penwidth=1 shape=circle]
+	COMA [label=COMA penwidth=1 shape=doublecircle]
+	CORCHETE_DER [label=CORCHETE_DER penwidth=1 shape=doublecircle]
+	CORCHETE_IZQ [label=CORCHETE_IZQ penwidth=1 shape=doublecircle]
+	CORTE [label=CORTE penwidth=1 shape=doublecircle]
+	ComLinea [label="ComLinea\n[COMENTARIO_LINEA]" penwidth=1 shape=doublecircle]
+	DosPuntos [label=DosPuntos penwidth=1 shape=circle]
+	Entero [label="Entero\n[ENTERO]" penwidth=1 shape=doublecircle]
+	EnteroPunto [label=EnteroPunto penwidth=1 shape=circle]
+	Espacio [label="Espacio\n[ESPACIO]" penwidth=1 shape=doublecircle]
+	IgualPunto [label=IgualPunto penwidth=1 shape=circle]
+	Inicio [label=Inicio penwidth=1 shape=circle]
+	Interrogacion [label=Interrogacion penwidth=1 shape=circle]
+	LLAVE_DER [label=LLAVE_DER penwidth=1 shape=doublecircle]
+	LLAVE_IZQ [label=LLAVE_IZQ penwidth=1 shape=doublecircle]
+	MenosMenos [label=MenosMenos penwidth=1 shape=circle]
+	OP_CONSULTA [label=OP_CONSULTA penwidth=1 shape=doublecircle]
+	OP_DCG [label=OP_DCG penwidth=1 shape=doublecircle]
+	OP_DIV_ENTERA [label=OP_DIV_ENTERA penwidth=1 shape=doublecircle]
+	OP_IDENTICO [label=OP_IDENTICO penwidth=1 shape=doublecircle]
+	OP_MAYOR [label=OP_MAYOR penwidth=1 shape=doublecircle]
+	OP_MAYOR_IGUAL [label=OP_MAYOR_IGUAL penwidth=1 shape=doublecircle]
+	OP_MENOR [label=OP_MENOR penwidth=1 shape=doublecircle]
+	OP_MENOR_IGUAL [label=OP_MENOR_IGUAL penwidth=1 shape=doublecircle]
+	OP_MULT [label=OP_MULT penwidth=1 shape=doublecircle]
+	OP_NEGACION [label=OP_NEGACION penwidth=1 shape=doublecircle]
+	OP_NO_IDENTICO [label=OP_NO_IDENTICO penwidth=1 shape=doublecircle]
+	OP_NO_UNIFICA [label=OP_NO_UNIFICA penwidth=1 shape=doublecircle]
+	OP_POTENCIA [label=OP_POTENCIA penwidth=1 shape=doublecircle]
+	OP_REGLA [label=OP_REGLA penwidth=1 shape=doublecircle]
+	OP_RESTA [label=OP_RESTA penwidth=1 shape=doublecircle]
+	OP_SUMA [label=OP_SUMA penwidth=1 shape=doublecircle]
+	OP_UNIFICA [label=OP_UNIFICA penwidth=1 shape=doublecircle]
+	OP_UNIV [label=OP_UNIV penwidth=1 shape=doublecircle]
+	PARENTESIS_DER [label=PARENTESIS_DER penwidth=1 shape=doublecircle]
+	PARENTESIS_IZQ [label=PARENTESIS_IZQ penwidth=1 shape=doublecircle]
+	PUNTO [label=PUNTO penwidth=1 shape=doublecircle]
+	PUNTO_Y_COMA [label=PUNTO_Y_COMA penwidth=1 shape=doublecircle]
+	Real [label="Real\n[REAL]" penwidth=1 shape=doublecircle]
+	Variable [label="Variable\n[VARIABLE]" penwidth=1 shape=doublecircle]
+	"" -> Inicio
+	Inicio -> CORTE [label="!"]
+	Inicio -> PARENTESIS_IZQ [label="("]
+	Inicio -> PARENTESIS_DER [label=")"]
+	Inicio -> OP_MULT [label="*"]
+	Inicio -> OP_SUMA [label="+"]
+	Inicio -> COMA [label=","]
+	Inicio -> OP_RESTA [label="-"]
+	Inicio -> PUNTO [label="."]
+	Inicio -> "CB_Barra/OP_DIV" [label="/"]
+	Inicio -> DosPuntos [label=":"]
+	Inicio -> PUNTO_Y_COMA [label=";"]
+	Inicio -> OP_MENOR [label="<"]
+	Inicio -> OP_UNIFICA [label="="]
+	Inicio -> OP_MAYOR [label=">"]
+	Inicio -> Interrogacion [label="?"]
+	Inicio -> CORCHETE_IZQ [label="["]
+	Inicio -> CORCHETE_DER [label="]"]
+	Inicio -> BarraInv [label=barra_inv]
+	Inicio -> CAD_Abierto [label=comilla_doble]
+	Inicio -> AC_Abierto [label=comilla_simple]
+	Inicio -> Entero [label=digito]
+	Inicio -> Espacio [label="espacio, salto"]
+	Inicio -> Anonima [label=guion_bajo]
+	Inicio -> Variable [label=mayuscula]
+	Inicio -> Atomo [label=minuscula]
+	Inicio -> ComLinea [label=porcentaje]
+	Inicio -> LLAVE_IZQ [label="{"]
+	Inicio -> BARRA [label="|"]
+	Inicio -> LLAVE_DER [label="}"]
+	OP_MULT -> OP_POTENCIA [label="*"]
+	OP_RESTA -> MenosMenos [label="-"]
+	"CB_Barra/OP_DIV" -> CB_Dentro [label="*"]
+	"CB_Barra/OP_DIV" -> OP_DIV_ENTERA [label="/"]
+	DosPuntos -> OP_REGLA [label="-"]
+	OP_UNIFICA -> IgualPunto [label="."]
+	OP_UNIFICA -> OP_MENOR_IGUAL [label="<"]
+	OP_UNIFICA -> OP_IDENTICO [label="="]
+	OP_MAYOR -> OP_MAYOR_IGUAL [label="="]
+	Interrogacion -> OP_CONSULTA [label="-"]
+	BarraInv -> OP_NEGACION [label="+"]
+	BarraInv -> OP_NO_UNIFICA [label="="]
+	CAD_Abierto -> CAD_Abierto [label="todo menos barra_inv, comilla_doble, salto"]
+	CAD_Abierto -> CAD_Escape [label=barra_inv]
+	CAD_Abierto -> CAD_Cerrado [label=comilla_doble]
+	AC_Abierto -> AC_Abierto [label="todo menos barra_inv, comilla_simple, salto"]
+	AC_Abierto -> AC_Escape [label=barra_inv]
+	AC_Abierto -> AC_Cerrado [label=comilla_simple]
+	Entero -> EnteroPunto [label="."]
+	Entero -> Entero [label=digito]
+	Espacio -> Espacio [label="espacio, salto"]
+	Anonima -> Variable [label="digito, guion_bajo, mayuscula, minuscula"]
+	Variable -> Variable [label="digito, guion_bajo, mayuscula, minuscula"]
+	Atomo -> Atomo [label="digito, guion_bajo, mayuscula, minuscula"]
+	ComLinea -> ComLinea [label="todo menos salto"]
+	MenosMenos -> OP_DCG [label=">"]
+	CB_Dentro -> CB_Dentro [label="todo menos *"]
+	CB_Dentro -> CB_Asterisco [label="*"]
+	IgualPunto -> OP_UNIV [label="."]
+	OP_NO_UNIFICA -> OP_NO_IDENTICO [label="="]
+	CAD_Escape -> CAD_Abierto [label="todo menos salto"]
+	CAD_Cerrado -> CAD_Abierto [label=comilla_doble]
+	AC_Escape -> AC_Abierto [label="todo menos salto"]
+	AC_Cerrado -> AC_Abierto [label=comilla_simple]
+	EnteroPunto -> Real [label=digito]
+	CB_Asterisco -> CB_Dentro [label="todo menos *, /"]
+	CB_Asterisco -> CB_Asterisco [label="*"]
+	CB_Asterisco -> CB_Cerrado [label="/"]
+	Real -> Real [label=digito]
 }

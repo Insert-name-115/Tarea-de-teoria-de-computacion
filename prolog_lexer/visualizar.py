@@ -1,105 +1,96 @@
-"""
-Visualización de los AFD (apoyo para el informe).
-
-- `a_dot(afd)` genera el código Graphviz (DOT) del autómata.
-- `tabla_transiciones(afd)` genera una tabla de texto con estados y transiciones.
-
-Si Graphviz está instalado (comando `dot`), `guardar(afd, carpeta)` también crea
-la imagen PNG. Si no, el archivo .dot se puede abrir en https://dreampuf.github.io/GraphvizOnline
-"""
+# -------------------------------------------------------------------
+# Funciones para visualizar los AFD y mostrar pasos
+# -------------------------------------------------------------------
+# Comentarios:
+# - 'dibujar_afd' dibuja el grafo del AFD con Graphviz. Si se le pasa el
+#   camino recorrido (log de 'simular'), lo resalta en azul.
+# - 'tabla_pasos' muestra en consola las transiciones tomadas.
+# - 'tabla_transiciones' lista estados y transiciones (útil para el informe).
+# - 'guardar_afd' guarda el .dot y, si está instalado Graphviz ('dot'),
+#   también el .png. Los .dot se pueden ver en
+#   https://dreampuf.github.io/GraphvizOnline
+# -------------------------------------------------------------------
 
 import shutil
-import subprocess
 from pathlib import Path
-from typing import Dict, List, Set, Tuple
+from typing import List, Optional
 
-from .automatas import AFD, ALFABETO, DIGITOS, MAYUSCULAS, MINUSCULAS, OTRO
+import graphviz
 
-_NOMBRES_ESPECIALES = {" ": "␣", "\t": "\\t", "\n": "\\n", "\r": "\\r", OTRO: "otro"}
-
-
-def _mostrar(s: str) -> str:
-    return _NOMBRES_ESPECIALES.get(s, s)
+from .automatas import AFD, ALFABETO
 
 
-def etiqueta(simbolos: Set[str]) -> str:
-    """Resume un conjunto de símbolos: 'a-z, A-Z, 0-9, _' o 'todo excepto *'."""
-    faltan = ALFABETO - simbolos
-    if len(faltan) <= 4 and len(simbolos) > len(faltan):
-        if not faltan:
-            return "cualquiera"
-        return "todo excepto " + " ".join(_mostrar(s) for s in sorted(faltan))
-
-    partes, resto = [], set(simbolos)
-    for grupo, texto in ((MINUSCULAS, "a-z"), (MAYUSCULAS, "A-Z"), (DIGITOS, "0-9")):
-        if grupo <= resto:
-            partes.append(texto)
-            resto -= grupo
-    partes += [_mostrar(s) for s in sorted(resto)]
-    return ", ".join(partes)
+def etiqueta(simbolos: List[str]) -> str:
+    """Si son casi todos los símbolos, escribe 'todo menos ...' para acortar."""
+    faltan = ALFABETO - set(simbolos)
+    if len(simbolos) > 8:
+        return "todo menos " + ", ".join(sorted(faltan)) if faltan else "cualquiera"
+    return ", ".join(sorted(simbolos))
 
 
-def _agrupar(afd: AFD) -> Dict[Tuple[str, str], Set[str]]:
-    """Junta las transiciones que van del mismo origen al mismo destino."""
-    grupos: Dict[Tuple[str, str], Set[str]] = {}
-    for (origen, s), destino in afd.transiciones.items():
-        grupos.setdefault((origen, destino), set()).add(s)
-    return grupos
+def dibujar_afd(afd: AFD, log: Optional[list] = None) -> graphviz.Digraph:
+    dot = graphviz.Digraph(name=afd.nombre, format="png")
+    dot.attr(rankdir="LR")
+    dot.node("", shape="point")  # nodo invisible para la flecha inicial
 
+    # Pares (origen, destino) recorridos en la simulación
+    recorridos = {(estado, sig) for (_, estado, _, _, sig) in (log or []) if sig}
+    estado_final = log[-1][4] if log else None
 
-def _orden(estado: str):
-    return int(estado[1:]) if estado[1:].isdigit() else estado
-
-
-def _escapar_dot(texto: str) -> str:
-    return texto.replace("\\", "\\\\").replace('"', '\\"')
-
-
-def a_dot(afd: AFD) -> str:
-    lineas = [
-        f'digraph "{afd.nombre}" {{',
-        "  rankdir=LR;",
-        '  node [fontname="Helvetica"]; edge [fontname="Helvetica", fontsize=10];',
-        '  inicio [shape=point, label=""];',
-    ]
-    for estado in sorted(afd.estados, key=_orden):
-        if estado in afd.aceptacion:
-            lineas.append(
-                f'  {estado} [shape=doublecircle, label="{estado}\\n{afd.aceptacion[estado]}"];'
-            )
+    # Dibujar estados (doble círculo si es de aceptación)
+    for s in sorted(afd.estados):
+        if s in afd.estados_aceptacion:
+            texto = f"{s}\\n[{afd.estados_aceptacion[s]}]" if s != afd.estados_aceptacion[s] else s
+            forma = "doublecircle"
         else:
-            lineas.append(f"  {estado} [shape=circle];")
-    lineas.append(f"  inicio -> {afd.inicial};")
-    for (origen, destino), simbolos in _agrupar(afd).items():
-        lineas.append(f'  {origen} -> {destino} [label="{_escapar_dot(etiqueta(simbolos))}"];')
-    lineas.append("}")
-    return "\n".join(lineas)
+            texto, forma = s, "circle"
+        grosor = "3" if s == estado_final else "1"
+        dot.node(s, label=texto, shape=forma, penwidth=grosor)
+
+    # Flecha al estado inicial
+    dot.edge("", afd.estado_inicial)
+
+    # Agrupar símbolos por (origen, destino)
+    etiquetas = {}
+    for (origen, simbolo), destino in afd.transiciones.items():
+        etiquetas.setdefault((origen, destino), []).append(simbolo)
+
+    for (origen, destino), simbolos in etiquetas.items():
+        if (origen, destino) in recorridos:
+            dot.edge(origen, destino, label=etiqueta(simbolos), color="blue", penwidth="2")
+        else:
+            dot.edge(origen, destino, label=etiqueta(simbolos))
+
+    return dot
 
 
-def tabla_transiciones(afd: AFD) -> str:
-    """Tabla legible: estado | tipo | transiciones."""
-    filas: List[str] = [f"AFD {afd.nombre}: {len(afd.estados)} estados, inicial = {afd.inicial}"]
-    grupos = _agrupar(afd)
-    for estado in sorted(afd.estados, key=_orden):
-        tipo = []
-        if estado == afd.inicial:
-            tipo.append("inicial")
-        if estado in afd.aceptacion:
-            tipo.append(f"acepta {afd.aceptacion[estado]}")
-        salidas = [
-            f"[{etiqueta(sims)}] -> {destino}"
-            for (origen, destino), sims in grupos.items()
-            if origen == estado
-        ]
-        filas.append(f"  {estado:>4} ({', '.join(tipo) or '-'}): {';  '.join(salidas) or '(sin salidas)'}")
+def tabla_pasos(log: list) -> str:
+    if not log:
+        return "  No hubo transiciones."
+    filas = [f"  {'#':>2}  {'Estado actual':<20} {'Carácter':<9} {'Símbolo':<15} Nuevo estado"]
+    for i, estado, c, simbolo, siguiente in log:
+        filas.append(f"  {i:>2}  {estado:<20} {c!r:<9} {simbolo:<15} {siguiente or 'ERROR'}")
     return "\n".join(filas)
 
 
-def guardar(afd: AFD, carpeta: Path) -> Path:
-    """Escribe <nombre>.dot y, si existe Graphviz, también <nombre>.png."""
+def tabla_transiciones(afd: AFD) -> str:
+    etiquetas = {}
+    for (origen, simbolo), destino in afd.transiciones.items():
+        etiquetas.setdefault(origen, {}).setdefault(destino, []).append(simbolo)
+
+    filas = [f"AFD {afd.nombre}: {len(afd.estados)} estados, inicial = {afd.estado_inicial}"]
+    for estado in sorted(afd.estados, key=lambda s: (s != afd.estado_inicial, s)):
+        tipo = f"ACEPTA {afd.estados_aceptacion[estado]}" if estado in afd.estados_aceptacion else "-"
+        salidas = [f"[{etiqueta(sims)}] -> {dest}" for dest, sims in etiquetas.get(estado, {}).items()]
+        filas.append(f"  {estado:<14} ({tipo}): {';  '.join(salidas) or '(sin salidas)'}")
+    return "\n".join(filas)
+
+
+def guardar_afd(afd: AFD, carpeta: Path, log: Optional[list] = None) -> Path:
     carpeta.mkdir(parents=True, exist_ok=True)
-    ruta_dot = carpeta / f"{afd.nombre.lower()}.dot"
-    ruta_dot.write_text(a_dot(afd), encoding="utf-8")
+    dot = dibujar_afd(afd, log)
+    ruta = carpeta / f"{afd.nombre.lower()}.dot"
+    dot.save(ruta)
     if shutil.which("dot"):
-        subprocess.run(["dot", "-Tpng", str(ruta_dot), "-o", str(ruta_dot.with_suffix(".png"))], check=True)
-    return ruta_dot
+        dot.render(ruta, outfile=ruta.with_suffix(".png"))
+    return ruta

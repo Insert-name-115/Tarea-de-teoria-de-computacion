@@ -1,13 +1,12 @@
-digraph "VARIABLE" {
-  rankdir=LR;
-  node [fontname="Helvetica"]; edge [fontname="Helvetica", fontsize=10];
-  inicio [shape=point, label=""];
-  q0 [shape=circle];
-  q1 [shape=doublecircle, label="q1\nVARIABLE_ANONIMA"];
-  q2 [shape=doublecircle, label="q2\nVARIABLE"];
-  inicio -> q0;
-  q0 -> q1 [label="_"];
-  q0 -> q2 [label="A-Z"];
-  q1 -> q2 [label="a-z, A-Z, 0-9, _"];
-  q2 -> q2 [label="a-z, A-Z, 0-9, _"];
+digraph VARIABLE {
+	rankdir=LR
+	"" [shape=point]
+	Anonima [label="Anonima\n[VARIABLE_ANONIMA]" penwidth=1 shape=doublecircle]
+	Inicio [label=Inicio penwidth=1 shape=circle]
+	Variable [label="Variable\n[VARIABLE]" penwidth=1 shape=doublecircle]
+	"" -> Inicio
+	Inicio -> Anonima [label=guion_bajo]
+	Inicio -> Variable [label=mayuscula]
+	Anonima -> Variable [label="digito, guion_bajo, mayuscula, minuscula"]
+	Variable -> Variable [label="digito, guion_bajo, mayuscula, minuscula"]
 }

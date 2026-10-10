@@ -1,17 +1,16 @@
-"""
-Pruebas de coherencia entre los puntos 1, 2 y 3:
-especificación (ejemplos)  <->  expresiones regulares  <->  autómatas.
-
-Ejecutar con:  python -m pytest
-"""
+# -------------------------------------------------------------------
+# Pruebas de coherencia entre los puntos 1, 2 y 3
+#   especificación (ejemplos)  <->  expresiones regulares  <->  autómatas
+#
+# Ejecutar con:  python -m pytest
+# -------------------------------------------------------------------
 
 import pytest
 
-from prolog_lexer import automatas as A
+from prolog_lexer import automatas
+from prolog_lexer.automatas import afd_integrado, reconocer_token, token_de_lexema
 from prolog_lexer.especificacion import CATEGORIAS
 from prolog_lexer.expresiones_regulares import EXPRESIONES, calza_completo, coincidencia_mas_larga
-
-INTEGRADO = A.afd_integrado()
 
 
 def test_cada_categoria_tiene_expresion_regular():
@@ -21,15 +20,15 @@ def test_cada_categoria_tiene_expresion_regular():
 @pytest.mark.parametrize("cat", CATEGORIAS, ids=lambda c: c.token)
 def test_ejemplos_validos(cat):
     for lexema in cat.validos:
-        assert calza_completo(cat.token, lexema), f"ER rechaza {lexema!r}"
-        assert INTEGRADO.acepta(lexema) == cat.token, f"AFD no da {cat.token} para {lexema!r}"
+        assert calza_completo(cat.token, lexema), f"La ER rechaza {lexema!r}"
+        assert token_de_lexema(lexema) == cat.token, f"El AFD no da {cat.token} para {lexema!r}"
 
 
 @pytest.mark.parametrize("cat", CATEGORIAS, ids=lambda c: c.token)
 def test_ejemplos_invalidos(cat):
     for lexema in cat.invalidos:
-        assert not calza_completo(cat.token, lexema), f"ER acepta {lexema!r}"
-        assert INTEGRADO.acepta(lexema) != cat.token, f"AFD acepta {lexema!r}"
+        assert not calza_completo(cat.token, lexema), f"La ER acepta {lexema!r}"
+        assert token_de_lexema(lexema) != cat.token, f"El AFD acepta {lexema!r}"
 
 
 @pytest.mark.parametrize(
@@ -48,7 +47,6 @@ def test_ejemplos_invalidos(cat):
         ("modulo", ("ATOMO", "modulo")),
         ("3.14.", ("REAL", "3.14")),
         ("3.", ("ENTERO", "3")),
-        ("1.5e", ("REAL", "1.5")),
         ("/*x*/", ("COMENTARIO_BLOQUE", "/*x*/")),
         ("/x", ("OP_DIV", "/")),
         ("-->", ("OP_DCG", "-->")),
@@ -58,24 +56,32 @@ def test_ejemplos_invalidos(cat):
     ],
 )
 def test_maxima_coincidencia_y_prioridad(texto, esperado):
-    assert INTEGRADO.reconocer(texto) == esperado
+    assert reconocer_token(texto) == esperado
     assert coincidencia_mas_larga(texto) == esperado
 
 
 def test_er_y_afd_coinciden_en_un_programa():
-    """Desde cada posición del texto, ER y AFD deben elegir el mismo token."""
+    """Desde cada posición del texto, la ER y el AFD deben elegir lo mismo."""
     texto = (
         "% comentario\nabuelo(X, Z) :- padre(X, Y), padre(Y, Z).\n"
         "suma(A, B, C) :- C is A + B * 2 ** 3 // 4 mod 5.\n"
-        "x([H|T], _) :- \\+ H \\== T, !; T =.. L, L =< 3.5e-2.\n"
-        "/* bloque\n ** */ s(\"hola \\\"mundo\\\"\", 'it''s'). ?- {a}. a --> b.\n"
+        "x([H|T], _) :- \\+ H \\== T, !; T =.. L, L =< 3.5, @.\n"
+        "/* bloque\n ** */ s(\"hola \\\"mundo\\\"\", 'it''s', 'Pérez'). ?- {a}. a --> b.\n"
     )
     for i in range(len(texto)):
-        assert INTEGRADO.reconocer(texto, i) == coincidencia_mas_larga(texto, i), i
+        assert reconocer_token(texto, i) == coincidencia_mas_larga(texto, i), f"posición {i}"
 
 
-def test_afd_integrado_es_determinista_y_completo_en_estados():
-    for (origen, _), destino in INTEGRADO.transiciones.items():
-        assert origen in INTEGRADO.estados and destino in INTEGRADO.estados
-    assert INTEGRADO.inicial == "q0"
-    assert set(INTEGRADO.aceptacion) <= INTEGRADO.estados
+def test_simular_registra_los_pasos():
+    final, log = automatas.afd_atomo.simular("ab1")
+    assert final == "Atomo"
+    assert [paso[1] for paso in log] == ["Inicio", "Atomo", "Atomo"]
+    assert automatas.afd_atomo.simular("1ab")[0] is None
+
+
+def test_afd_integrado_bien_formado():
+    for (origen, simbolo), destino in afd_integrado.transiciones.items():
+        assert origen in afd_integrado.estados
+        assert destino in afd_integrado.estados
+        assert simbolo in afd_integrado.alfabeto
+    assert set(afd_integrado.estados_aceptacion) <= afd_integrado.estados

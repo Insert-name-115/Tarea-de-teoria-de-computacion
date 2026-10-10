@@ -1,10 +1,9 @@
-digraph "ESPACIO" {
-  rankdir=LR;
-  node [fontname="Helvetica"]; edge [fontname="Helvetica", fontsize=10];
-  inicio [shape=point, label=""];
-  q0 [shape=circle];
-  q1 [shape=doublecircle, label="q1\nESPACIO"];
-  inicio -> q0;
-  q0 -> q1 [label="\\t, \\n, \\r, ␣"];
-  q1 -> q1 [label="\\t, \\n, \\r, ␣"];
+digraph ESPACIO {
+	rankdir=LR
+	"" [shape=point]
+	Espacio [label="Espacio\n[ESPACIO]" penwidth=1 shape=doublecircle]
+	Inicio [label=Inicio penwidth=1 shape=circle]
+	"" -> Inicio
+	Inicio -> Espacio [label="espacio, salto"]
+	Espacio -> Espacio [label="espacio, salto"]
 }
