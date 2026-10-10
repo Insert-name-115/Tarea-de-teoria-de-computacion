@@ -1,8 +1,8 @@
 digraph COMENTARIO_LINEA {
 	rankdir=LR
 	"" [shape=point]
-	ComLinea [label="ComLinea\n[COMENTARIO_LINEA]" penwidth=1 shape=doublecircle]
-	Inicio [label=Inicio penwidth=1 shape=circle]
+	Inicio [shape=circle]
+	ComLinea [label="ComLinea\n[COMENTARIO_LINEA]" shape=doublecircle]
 	"" -> Inicio
 	Inicio -> ComLinea [label=porcentaje]
 	ComLinea -> ComLinea [label="todo menos salto"]

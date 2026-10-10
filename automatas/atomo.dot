@@ -1,8 +1,8 @@
 digraph ATOMO {
 	rankdir=LR
 	"" [shape=point]
-	Atomo [label="Atomo\n[ATOMO]" penwidth=1 shape=doublecircle]
-	Inicio [label=Inicio penwidth=1 shape=circle]
+	Inicio [shape=circle]
+	Atomo [label="Atomo\n[ATOMO]" shape=doublecircle]
 	"" -> Inicio
 	Inicio -> Atomo [label=minuscula]
 	Atomo -> Atomo [label="digito, guion_bajo, mayuscula, minuscula"]
