@@ -1,16 +1,3 @@
-# -------------------------------------------------------------------
-# PUNTO 1: Especificación del subconjunto de Prolog
-# Comentarios:
-# - Cada fila es: (token, patrón, ejemplos válidos, ejemplos inválidos, atributo)
-# - Convenciones del grupo:
-#   * Números sin signo: "-5" son dos tokens (OP_RESTA y ENTERO).
-#   * Real = parte entera + punto + parte decimal ("3.14"; no "3.", ".5" ni "1.5e3").
-#   * Dentro de comillas, "\" + cualquier carácter es un escape, y ''
-#     (o "") representa la comilla. No se permiten saltos de línea.
-#   * Los comentarios /* */ no se anidan.
-#   * Espacios y comentarios se reconocen, pero luego se ignoran.
-# -------------------------------------------------------------------
-
 TOKENS = [
     ("ATOMO", "minúscula + letras, dígitos o _", ["padre", "persona_1"], ["Padre", "1abc"], "índice tabla de lexemas"),
     ("ATOMO_COMILLAS", "texto entre comillas simples", ["'Juan Pérez'", "':-'"], ["'sin cierre"], "índice tabla de lexemas"),

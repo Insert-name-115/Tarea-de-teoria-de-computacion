@@ -2,8 +2,8 @@ digraph VARIABLE {
 	rankdir=LR
 	"" [shape=point]
 	Anonima [label="Anonima\nVARIABLE_ANONIMA" shape=doublecircle]
-	Variable [label="Variable\nVARIABLE" shape=doublecircle]
 	Inicio [shape=circle]
+	Variable [label="Variable\nVARIABLE" shape=doublecircle]
 	"" -> Inicio
 	Inicio -> Anonima [label=guion_bajo]
 	Inicio -> Variable [label=mayuscula]

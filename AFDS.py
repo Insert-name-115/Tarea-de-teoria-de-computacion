@@ -139,7 +139,7 @@ def dibujar_afd(afd):
 
     # Dibujar estados (doble círculo si es de aceptación)
     estados = {afd.inicial} | {e for e, _ in afd.transiciones} | set(afd.transiciones.values())
-    for s in estados:
+    for s in sorted(estados):  # ordenados: el .dot sale igual en cada ejecución
         e = graphviz.escape(s)  # escapa la barra invertida de estados como "\="
         if s in afd.aceptacion:
             dot.node(e, e + "\\n" + afd.aceptacion[s], shape="doublecircle")

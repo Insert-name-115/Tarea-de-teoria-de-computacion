@@ -23,7 +23,6 @@ for lexema, token in OPERADORES.items():
 
 
 def reconocer_er(texto, inicio=0):
-    """Devuelve (token, lexema) usando máxima coincidencia y prioridad."""
     token_elegido, lexema_elegido = None, ""
     for token, er in EXPRESIONES.items():
         m = re.compile(er).match(texto, inicio)

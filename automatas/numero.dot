@@ -1,10 +1,10 @@
 digraph NUMERO {
 	rankdir=LR
 	"" [shape=point]
-	EnteroPunto [shape=circle]
-	Real [label="Real\nREAL" shape=doublecircle]
 	Entero [label="Entero\nENTERO" shape=doublecircle]
+	EnteroPunto [shape=circle]
 	Inicio [shape=circle]
+	Real [label="Real\nREAL" shape=doublecircle]
 	"" -> Inicio
 	Inicio -> Entero [label=digito]
 	Entero -> Entero [label=digito]

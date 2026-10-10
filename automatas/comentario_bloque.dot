@@ -2,8 +2,8 @@ digraph COMENTARIO_BLOQUE {
 	rankdir=LR
 	"" [shape=point]
 	"/" [shape=circle]
-	CB_Cerrado [label="CB_Cerrado\nCOMENTARIO_BLOQUE" shape=doublecircle]
 	CB_Asterisco [shape=circle]
+	CB_Cerrado [label="CB_Cerrado\nCOMENTARIO_BLOQUE" shape=doublecircle]
 	CB_Dentro [shape=circle]
 	Inicio [shape=circle]
 	"" -> Inicio
